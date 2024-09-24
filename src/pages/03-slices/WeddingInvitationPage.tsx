@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import { WhiteCard } from '../../components';
 import { useWeddingBoundStore } from '../../stores/wedding';
 
@@ -11,6 +12,21 @@ export const WeddingInvitationPage = () => {
 	const guestCount = useWeddingBoundStore((state) => state.guestCount);
 	const setGuestCount = useWeddingBoundStore((state) => state.setGuestCount);
 
+	const eventYYYYMMDD = useWeddingBoundStore((state) => state.eventYYYYMMDD());
+	const eventHHMM = useWeddingBoundStore((state) => state.eventHHMM());
+	const setEventDate = useWeddingBoundStore((state) => state.setEventDate);
+	const setEventTime = useWeddingBoundStore((state) => state.setEventTime);
+
+	const isConfrimed = useWeddingBoundStore((state) => state.isConfirmed);
+	const setIsConfirmed = useWeddingBoundStore((state) => state.setIsConfirmed);
+
+	const eventDate = useWeddingBoundStore((state) => state.eventDate);
+
+	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log({ firstName, lastName, guestCount, eventDate, isConfrimed });
+	};
+
 	return (
 		<>
 			<h1>Invitación de Boda</h1>
@@ -19,10 +35,7 @@ export const WeddingInvitationPage = () => {
 
 			<WhiteCard className='flex items-center justify-center p-12'>
 				<div className='mx-auto w-full max-w-[550px]'>
-					<form
-						action='https://formbold.com/s/FORM_ID'
-						method='POST'
-					>
+					<form onSubmit={(e) => onSubmit(e)}>
 						<div className='-mx-3 flex flex-wrap'>
 							<div className='w-full px-3 sm:w-1/2'>
 								<div className='mb-5'>
@@ -73,6 +86,8 @@ export const WeddingInvitationPage = () => {
 										type='date'
 										name='eventDate'
 										id='eventDate'
+										value={eventYYYYMMDD}
+										onChange={(e) => setEventDate(e.target.value)}
 									/>
 								</div>
 							</div>
@@ -83,6 +98,8 @@ export const WeddingInvitationPage = () => {
 										type='time'
 										name='eventTime'
 										id='eventTime'
+										value={eventHHMM}
+										onChange={(e) => setEventTime(e.target.value)}
 									/>
 								</div>
 							</div>
@@ -97,6 +114,8 @@ export const WeddingInvitationPage = () => {
 										name='isComing'
 										id='radioButton1'
 										className='h-5 w-5'
+										checked={isConfrimed}
+										onChange={() => setIsConfirmed(true)}
 									/>
 									<label className='pl-3 text-base font-medium text-[#07074D]'>Si</label>
 								</div>
@@ -106,6 +125,8 @@ export const WeddingInvitationPage = () => {
 										name='isComing'
 										id='radioButton2'
 										className='h-5 w-5'
+										checked={!isConfrimed}
+										onChange={() => setIsConfirmed(false)}
 									/>
 									<label className='pl-3 text-base font-medium text-[#07074D]'>No</label>
 								</div>
