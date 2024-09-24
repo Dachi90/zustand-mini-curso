@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 import { JiraTasks } from '../../components';
 import { useTaskStore } from '../../stores';
 
 export const JiraPage = () => {
-	const pendingTasks = useMemo(() => useTaskStore.getState().getTaskByStatus('open'), []);
-	const inProgressTasks = useMemo(() => useTaskStore.getState().getTaskByStatus('in-progress'), []);
-	const doneTasks = useMemo(() => useTaskStore.getState().getTaskByStatus('done'), []);
+	const pendingTasks = useTaskStore((state) => state.getTaskByStatus('open'));
+	const inProgressTasks = useTaskStore((state) => state.getTaskByStatus('in-progress'));
+	const doneTasks = useTaskStore((state) => state.getTaskByStatus('done'));
 
 	return (
 		<>
@@ -17,19 +17,19 @@ export const JiraPage = () => {
 				<JiraTasks
 					title='Pendientes'
 					tasks={pendingTasks}
-					value='open'
+					status='open'
 				/>
 
 				<JiraTasks
 					title='Avanzando'
 					tasks={inProgressTasks}
-					value='in-progress'
+					status='in-progress'
 				/>
 
 				<JiraTasks
 					title='Terminadas'
 					tasks={doneTasks}
-					value='done'
+					status='done'
 				/>
 			</div>
 		</>

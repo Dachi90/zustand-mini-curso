@@ -27,6 +27,7 @@ export const usePersonStore = create<PersonState & Actions>()(
 			name: 'person-storage',
 			// storage: customSessionStorage,
 			// storage: firebaseStorage,
-		})
+		}),
+		{ name: 'Person storage' }
 	)
 );
