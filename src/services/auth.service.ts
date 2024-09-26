@@ -25,4 +25,14 @@ export class AuthService {
 			throw new Error('Unable to login');
 		}
 	};
+
+	static checkStatus = async (): Promise<LoginResponse> => {
+		try {
+			const { data } = await tesloApi('/auth/check-status');
+			return data;
+		} catch (error) {
+			console.log(error);
+			throw new Error('UnAuthorized');
+		}
+	};
 }
